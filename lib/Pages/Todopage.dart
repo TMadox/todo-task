@@ -54,13 +54,15 @@ class _TodoPageState extends State<TodoPage> {
                       return ListView.builder(
                           itemCount: snapshot.data.docs.length,
                           itemBuilder: (context, index) {
-                            return swipeActionCell(
-                                connectionstate: connection,
-                                item: snapshot.data.docs[index].data(),
-                                ondone: () {
-                                  FirebaseAPI.removedata(
-                                      snapshot.data.docs[index].id);
-                                });
+                            return Card(
+                              child: swipeActionCell(
+                                  connectionstate: connection,
+                                  item: snapshot.data.docs[index].data(),
+                                  ondelete: () {
+                                    FirebaseAPI.removedata(
+                                        snapshot.data.docs[index].id);
+                                  }),
+                            );
                           });
                     } else {
                       return Center(
@@ -72,15 +74,15 @@ class _TodoPageState extends State<TodoPage> {
               : ListView.builder(
                   itemCount: watch(generalmanagment).todolist.length,
                   itemBuilder: (context, index) {
-                    print("connection");
                     return Card(
                         child: swipeActionCell(
                             connectionstate: connection,
                             item: watch(generalmanagment).todolist[index],
-                            ondone: () {
+                            ondelete: () {
                               watch(generalmanagment).removefromlist(
                                   watch(generalmanagment).todolist[index]);
-                            }));
+                            },
+                            ondone: () {}));
                   }),
         ),
       ),

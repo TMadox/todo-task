@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swipe_action_cell/core/cell.dart';
 
 Widget swipeActionCell(
-        {var item, Function ondone, DataConnectionStatus connectionstate}) =>
+        {var item,
+        Function ondelete,
+        Function ondone,
+        DataConnectionStatus connectionstate}) =>
     SwipeActionCell(
       key: ObjectKey(item),
       performsFirstActionWithFullSwipe: true,
@@ -13,14 +16,15 @@ Widget swipeActionCell(
             title: "Delete",
             onTap: (CompletionHandler handler) async {
               await handler(true);
-              ondone();
+              ondelete();
             },
             color: Colors.red),
         SwipeAction(
             widthSpace: 120,
-            title: "Edit",
+            title: "Done",
             onTap: (CompletionHandler handler) async {
               handler(false);
+              ondone();
             },
             color: Colors.orange),
       ],
